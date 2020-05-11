@@ -60,7 +60,7 @@ public class FirstWBGUI extends JFrame {
 	private JMenuItem mntmNewMenuItem_4;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JLayeredPane layeredPane;
-	private JPanel panel;
+	private JPanel homePanel;
 	private JPanel addMemberPanel;
 	private JPanel memberCheckInPanel;
 	private JPanel generateMemberBillPanel;
@@ -119,6 +119,8 @@ public class FirstWBGUI extends JFrame {
 	private static FileHelper<Member> helper = new FileHelper<>("membersgui.txt", new MemberLineConverter(clubList));
 	private static FileHelper<Club> clubHelper = new FileHelper<>("clubgui.txt", new ClubLineConverter());
 	private JComboBox memberCheckIncb;
+	private JMenuItem mntmNewMenuItem_7;
+	private JMenuItem mntmNewMenuItem_6;
 	
 	
 	
@@ -167,6 +169,11 @@ public void initComponents() {
 	JMenu mnNewMenu = new JMenu("File");
 	menuBar.add(mnNewMenu);
 	
+	mntmNewMenuItem_6 = new JMenuItem("Home");
+	
+	mntmNewMenuItem_6.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/homeicon_16.png")));
+	mnNewMenu.add(mntmNewMenuItem_6);
+	
 	mntmNewMenuItem = new JMenuItem("Add New Member");
 	
 	mntmNewMenuItem.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/plussignicon_16.png")));
@@ -189,6 +196,11 @@ public void initComponents() {
 	mntmNewMenuItem_4.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/infosign_16.png")));
 	mnNewMenu.add(mntmNewMenuItem_4);
 	
+	mntmNewMenuItem_7 = new JMenuItem("Exit");
+	mntmNewMenuItem_7.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/exiticon_16.png")));
+	
+	mnNewMenu.add(mntmNewMenuItem_7);
+	
 	JMenu helpMenu = new JMenu("Help");
 	menuBar.add(helpMenu);
 	
@@ -205,11 +217,11 @@ public void initComponents() {
 	contentPane.add(layeredPane);
 	layeredPane.setLayout(new CardLayout(0, 0));
 	
-	panel = new JPanel();
-	layeredPane.add(panel, "name_1438237637637400");
+	homePanel = new JPanel();
+	layeredPane.add(homePanel, "name_1438237637637400");
 	
 	homePanelTitleLbl = new JLabel("WELCOME TO THE MEMBER MANAGER");
-	panel.add(homePanelTitleLbl);
+	homePanel.add(homePanelTitleLbl);
 	
 	addMemberPanel = new JPanel();
 	layeredPane.add(addMemberPanel, "name_1438273308145800");
@@ -595,6 +607,23 @@ public void initComponents() {
 				if (rbAddMemTypeSingle.isSelected()) {
 					addMemberCb.setVisible(true);
 				}
+			}
+		});
+		
+		mntmNewMenuItem_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int ret = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?");
+				if (ret == JOptionPane.YES_OPTION) {
+					System.exit(0);
+				}
+			}
+		});
+		
+		mntmNewMenuItem_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchPanels(homePanel);
+				
 			}
 		});
 		
