@@ -1,6 +1,6 @@
 package views;
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -23,14 +23,8 @@ import javax.swing.JLayeredPane;
 import java.awt.CardLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.Font;
 import javax.swing.JRadioButton;
-import javax.swing.JList;
-import javax.swing.JFormattedTextField;
 import javax.swing.ButtonGroup;
-import java.awt.FlowLayout;
-import javax.swing.border.SoftBevelBorder;
-
 import common.Club;
 import common.ClubLineConverter;
 import common.FileHelper;
@@ -39,7 +33,6 @@ import common.MemberLineConverter;
 import common.MultiClubMember;
 import common.SingleClubMember;
 
-import javax.swing.border.BevelBorder;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
@@ -97,7 +90,6 @@ public class FirstWBGUI extends JFrame {
 	private JButton displayMemberBtn;
 	private static List<Member> memberList = new ArrayList<>();
 	private static List<Club> clubList = new ArrayList<>();
-	private String inputMemberName;
 	String inputBirthday;
 	private JComboBox addMemberCb;
 	String input;
@@ -519,12 +511,16 @@ public void initComponents() {
 /////This method contains all the code for creating events
 //////////////////////////////////////////////////////
 	public void createEvents() {
+		
+		
+		// Creating the action for clicking the add member menu item corresponding panel popping up
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(addMemberPanel);
 			}
 		});
 		
+		//Creating the action for clicking the member check menu item and the corresponding panel popping up
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(memberCheckInPanel);
@@ -532,24 +528,29 @@ public void initComponents() {
 	
 		});
 		
+		//Creating the action for clicking the generate member bill menu item and the corresponding panel popping up
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(generateMemberBillPanel);
 			}
 		});
 		
+		//Creating the action for clicking the remove member account menu item and the corresponding panel popping up
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(removeMemberAccPanel);
 			}
 		});
 		
+		//Creating the action for clicking the display member info menu item and the corresponding panel popping up
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(displayMemberInfoPanel);
 			}
 		});
 		
+		//Creating the action for clicking the submit button on the add members panel, this displays a dialog box once the information has been given and adds 
+		// the member based of which radio box is selected it also clears the entered information from the text fields 
 		addMemberSubmitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Member Added.");
@@ -565,6 +566,7 @@ public void initComponents() {
 			}
 		});	
 		
+		// Creating the action for clicking the Check In button on the member check in panel, calls the check in method below.
 		checkInBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -573,6 +575,8 @@ public void initComponents() {
 			}
 		});
 		
+		// Creating the action for clicking the generate bill button on the generate member bill panel. Calls the printbill method below. Also clears the text from
+		// the text field.
 		generateBillBtn.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			
@@ -581,6 +585,8 @@ public void initComponents() {
 		}
 	});
 	
+		// Creating the action for clicking the remove member button the on remove member panel. Calls the remove member method from below. Also clear the text from the 
+		// text field.
 		removeMemberBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeMember(memberNametxtField_RMA.getText());
@@ -588,6 +594,8 @@ public void initComponents() {
 			}
 		});
 	
+		//Creating the action for clicking the display member info button on the display member info panel. Calls the print member info method below. Clears the text
+		// from the text field. 
 		displayMemberBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -596,6 +604,8 @@ public void initComponents() {
 			}
 		});
 		
+		
+		// Creates the action of hiding the add member combo box if the multi radio btn option is selected. 
 		rbAddMemTypeMulti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (rbAddMemTypeMulti.isSelected()) {
@@ -604,6 +614,7 @@ public void initComponents() {
 			}
 		});
 		
+		// Creates the action of making he add member combo box visable if the single radio btn is selected. 
 		rbAddMemTypeSingle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (rbAddMemTypeSingle.isSelected()) {
@@ -612,6 +623,7 @@ public void initComponents() {
 			}
 		});
 		
+		// Creates the action of displaying a confim dialog box when the exit menu item is clicked on in the menu. if yes is selected the program is ended. 
 		mntmNewMenuItem_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -622,6 +634,7 @@ public void initComponents() {
 			}
 		});
 		
+		// Creates the action of making hte home Panel option visable when the option is selected on the menu. 
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(homePanel);
@@ -629,6 +642,7 @@ public void initComponents() {
 			}
 		});
 		
+		// creates an instance of the about dialog box and makes it visiable and modal when the corresponding option is selected in the menu. 
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				About about = new About();
@@ -642,6 +656,11 @@ public void initComponents() {
 		
 		
 	}
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////
+	//Below are methods used withen the events above to handle the member info 
+	//////////////////////////////////////////////////////////////////////////////////////////////
+	
 	// method allows me to switch panels on Jframe 
 	public void switchPanels(JPanel Panel) {
 
@@ -651,6 +670,7 @@ public void initComponents() {
 		layeredPane.revalidate();
 	}
 	
+	// this method creates a new single member object. It also adds the new member to the memberlist and adds them to the corresponding file.
 	private Member makeNewSingleMember(String inputMemberName, String inputBirthday, int clubPickIndex) {
 		int inputId = idNum;
 		idNum++;
@@ -661,6 +681,8 @@ public void initComponents() {
 		helper.append(newClubMember);
 		return newClubMember;
 	}
+	
+	// this method creates a new multi member object. It also adds the new member to the memberlist and adds them to the corresponding file.
 	private static Member makeNewMultiMember(String inputMemberName, String inputBirthday ) {
 		int inputId = idNum;
 		idNum++;
@@ -672,6 +694,9 @@ public void initComponents() {
 		return newClubMember;
 
 	}
+	
+	//This method helps to decipher what type of member is checking in and which location they are checking into
+	// if they are a single member
 	private static void memberCheckIn(String input,int clubPickIndex ) {
 		
 		String currentClub = clubList.get(clubPickIndex).getName();
@@ -707,7 +732,7 @@ public void initComponents() {
 			}
 		}JOptionPane.showMessageDialog(null, "Member doesn't exist.");
 	}
-	
+	//this method searches for the member name withen the memberlist and calls the print bill method which prints their bill in a dialog box
 	private static void printBill(String memberName ) {
 
 		for (Member m : memberList) {
@@ -716,10 +741,11 @@ public void initComponents() {
 				return;
 			} 
 			
-			
+		
 		}JOptionPane.showMessageDialog(null,"Member doesn't exist.");
 	}
 	
+	// this method removes a member based off their position in the member list, remove them from the list, then rewrite the file based off the values in the list. 
 	private static void removeMember(String input) {
 		int memberIndex = 0; 
 		
@@ -736,7 +762,7 @@ public void initComponents() {
 	
 	
 }
-	
+	//this method displays the member information in a dialog box 
 	private static void printMemberInfo(String input) {
 		for (Member m : memberList) {
 			if (m.getName().equalsIgnoreCase(input)) {
