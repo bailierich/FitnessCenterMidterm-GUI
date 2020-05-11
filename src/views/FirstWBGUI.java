@@ -121,6 +121,7 @@ public class FirstWBGUI extends JFrame {
 	private JComboBox memberCheckIncb;
 	private JMenuItem mntmNewMenuItem_7;
 	private JMenuItem mntmNewMenuItem_6;
+	private JMenuItem mntmNewMenuItem_5;
 	
 	
 	
@@ -204,7 +205,8 @@ public void initComponents() {
 	JMenu helpMenu = new JMenu("Help");
 	menuBar.add(helpMenu);
 	
-	JMenuItem mntmNewMenuItem_5 = new JMenuItem("About");
+	mntmNewMenuItem_5 = new JMenuItem("About");
+	
 	mntmNewMenuItem_5.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/abouticon_16.png")));
 	helpMenu.add(mntmNewMenuItem_5);
 	contentPane = new JPanel();
@@ -626,6 +628,18 @@ public void initComponents() {
 				
 			}
 		});
+		
+		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				About about = new About();
+				about.setModal(true);
+				about.setVisible(true);
+			}
+		});
+		
+		
+		
+		
 		
 	}
 	// method allows me to switch panels on Jframe 
