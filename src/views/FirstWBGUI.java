@@ -38,6 +38,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
 
 public class FirstWBGUI extends JFrame {
 	
@@ -46,12 +48,12 @@ public class FirstWBGUI extends JFrame {
 	
 
 	private JPanel contentPane;
-	private JMenuItem mntmNewMenuItem;
-	private JMenuItem mntmNewMenuItem_1;
-	private JMenuItem mntmNewMenuItem_2;
-	private JMenuItem mntmNewMenuItem_3;
-	private JMenuItem mntmNewMenuItem_4;
-	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JMenuItem mntmAddNewMember;
+	private JMenuItem mntmMemberCheckIn;
+	private JMenuItem mntmGenerateBill;
+	private JMenuItem mntmRemoveMemberAcc;
+	private JMenuItem mntmDisplayMemberInformation;
+	private final ButtonGroup buttonGroupMemberType = new ButtonGroup();
 	private JLayeredPane layeredPane;
 	private JPanel homePanel;
 	private JPanel addMemberPanel;
@@ -111,9 +113,9 @@ public class FirstWBGUI extends JFrame {
 	private static FileHelper<Member> helper = new FileHelper<>("membersgui.txt", new MemberLineConverter(clubList));
 	private static FileHelper<Club> clubHelper = new FileHelper<>("clubgui.txt", new ClubLineConverter());
 	private JComboBox memberCheckIncb;
-	private JMenuItem mntmNewMenuItem_7;
-	private JMenuItem mntmNewMenuItem_6;
-	private JMenuItem mntmNewMenuItem_5;
+	private JMenuItem mntmExit;
+	private JMenuItem mntmHome;
+	private JMenuItem mntmAbout;
 	
 	
 	
@@ -162,45 +164,45 @@ public void initComponents() {
 	JMenu mnNewMenu = new JMenu("File");
 	menuBar.add(mnNewMenu);
 	
-	mntmNewMenuItem_6 = new JMenuItem("Home");
+	mntmHome = new JMenuItem("Home");
 	
-	mntmNewMenuItem_6.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/homeicon_16.png")));
-	mnNewMenu.add(mntmNewMenuItem_6);
+	mntmHome.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/homeicon_16.png")));
+	mnNewMenu.add(mntmHome);
 	
-	mntmNewMenuItem = new JMenuItem("Add New Member");
+	mntmAddNewMember = new JMenuItem("Add New Member");
 	
-	mntmNewMenuItem.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/plussignicon_16.png")));
-	mnNewMenu.add(mntmNewMenuItem);
+	mntmAddNewMember.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/plussignicon_16.png")));
+	mnNewMenu.add(mntmAddNewMember);
 	
-	mntmNewMenuItem_1 = new JMenuItem("Member Check In");
+	mntmMemberCheckIn = new JMenuItem("Member Check In");
 	
-	mntmNewMenuItem_1.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/checkMark_16.png")));
-	mnNewMenu.add(mntmNewMenuItem_1);
+	mntmMemberCheckIn.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/checkMark_16.png")));
+	mnNewMenu.add(mntmMemberCheckIn);
 	
-	mntmNewMenuItem_3 = new JMenuItem("Remove Member Account");
-	mntmNewMenuItem_3.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/MinusMark_16.png")));
-	mnNewMenu.add(mntmNewMenuItem_3);
+	mntmRemoveMemberAcc = new JMenuItem("Remove Member Account");
+	mntmRemoveMemberAcc.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/MinusMark_16.png")));
+	mnNewMenu.add(mntmRemoveMemberAcc);
 	
-	mntmNewMenuItem_2 = new JMenuItem("Generate Member Bill");
-	mntmNewMenuItem_2.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/Dollarsign_16.png")));
-	mnNewMenu.add(mntmNewMenuItem_2);
+	mntmGenerateBill = new JMenuItem("Generate Member Bill");
+	mntmGenerateBill.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/Dollarsign_16.png")));
+	mnNewMenu.add(mntmGenerateBill);
 	
-	mntmNewMenuItem_4 = new JMenuItem("Display Member Information");
-	mntmNewMenuItem_4.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/infosign_16.png")));
-	mnNewMenu.add(mntmNewMenuItem_4);
+	mntmDisplayMemberInformation = new JMenuItem("Display Member Information");
+	mntmDisplayMemberInformation.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/infosign_16.png")));
+	mnNewMenu.add(mntmDisplayMemberInformation);
 	
-	mntmNewMenuItem_7 = new JMenuItem("Exit");
-	mntmNewMenuItem_7.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/exiticon_16.png")));
+	mntmExit = new JMenuItem("Exit");
+	mntmExit.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/exiticon_16.png")));
 	
-	mnNewMenu.add(mntmNewMenuItem_7);
+	mnNewMenu.add(mntmExit);
 	
 	JMenu helpMenu = new JMenu("Help");
 	menuBar.add(helpMenu);
 	
-	mntmNewMenuItem_5 = new JMenuItem("About");
+	mntmAbout = new JMenuItem("About");
 	
-	mntmNewMenuItem_5.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/abouticon_16.png")));
-	helpMenu.add(mntmNewMenuItem_5);
+	mntmAbout.setIcon(new ImageIcon(FirstWBGUI.class.getResource("/resources/abouticon_16.png")));
+	helpMenu.add(mntmAbout);
 	contentPane = new JPanel();
 	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	setContentPane(contentPane);
@@ -215,7 +217,22 @@ public void initComponents() {
 	layeredPane.add(homePanel, "name_1438237637637400");
 	
 	homePanelTitleLbl = new JLabel("WELCOME TO THE MEMBER MANAGER");
-	homePanel.add(homePanelTitleLbl);
+	GroupLayout gl_homePanel = new GroupLayout(homePanel);
+	gl_homePanel.setHorizontalGroup(
+		gl_homePanel.createParallelGroup(Alignment.LEADING)
+			.addGroup(gl_homePanel.createSequentialGroup()
+				.addGap(114)
+				.addComponent(homePanelTitleLbl)
+				.addGap(115))
+	);
+	gl_homePanel.setVerticalGroup(
+		gl_homePanel.createParallelGroup(Alignment.LEADING)
+			.addGroup(gl_homePanel.createSequentialGroup()
+				.addGap(5)
+				.addComponent(homePanelTitleLbl)
+				.addContainerGap(198, Short.MAX_VALUE))
+	);
+	homePanel.setLayout(gl_homePanel);
 	
 	addMemberPanel = new JPanel();
 	layeredPane.add(addMemberPanel, "name_1438273308145800");
@@ -233,11 +250,11 @@ public void initComponents() {
 	rbAddMemTypeSingle = new JRadioButton("SINGLE");
 	
 	rbAddMemTypeSingle.setSelected(true);
-	buttonGroup.add(rbAddMemTypeSingle);
+	buttonGroupMemberType.add(rbAddMemTypeSingle);
 	
 	rbAddMemTypeMulti = new JRadioButton("MULTI");
 	
-	buttonGroup.add(rbAddMemTypeMulti);
+	buttonGroupMemberType.add(rbAddMemTypeMulti);
 	
 	memberBirthdayLbl = new JLabel("Member Birthday:");
 	
@@ -514,14 +531,14 @@ public void initComponents() {
 		
 		
 		// Creating the action for clicking the add member menu item corresponding panel popping up
-		mntmNewMenuItem.addActionListener(new ActionListener() {
+		mntmAddNewMember.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(addMemberPanel);
 			}
 		});
 		
 		//Creating the action for clicking the member check menu item and the corresponding panel popping up
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+		mntmMemberCheckIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(memberCheckInPanel);
 			}
@@ -529,21 +546,21 @@ public void initComponents() {
 		});
 		
 		//Creating the action for clicking the generate member bill menu item and the corresponding panel popping up
-		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+		mntmGenerateBill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(generateMemberBillPanel);
 			}
 		});
 		
 		//Creating the action for clicking the remove member account menu item and the corresponding panel popping up
-		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+		mntmRemoveMemberAcc.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(removeMemberAccPanel);
 			}
 		});
 		
 		//Creating the action for clicking the display member info menu item and the corresponding panel popping up
-		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+		mntmDisplayMemberInformation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(displayMemberInfoPanel);
 			}
@@ -624,7 +641,7 @@ public void initComponents() {
 		});
 		
 		// Creates the action of displaying a confim dialog box when the exit menu item is clicked on in the menu. if yes is selected the program is ended. 
-		mntmNewMenuItem_7.addActionListener(new ActionListener() {
+		mntmExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				int ret = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?");
@@ -635,7 +652,7 @@ public void initComponents() {
 		});
 		
 		// Creates the action of making hte home Panel option visable when the option is selected on the menu. 
-		mntmNewMenuItem_6.addActionListener(new ActionListener() {
+		mntmHome.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				switchPanels(homePanel);
 				
@@ -643,7 +660,7 @@ public void initComponents() {
 		});
 		
 		// creates an instance of the about dialog box and makes it visiable and modal when the corresponding option is selected in the menu. 
-		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+		mntmAbout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				About about = new About();
 				about.setModal(true);
